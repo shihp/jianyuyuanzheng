@@ -1,0 +1,65 @@
+{
+	"idle": {
+		"max_offline_hours": 12,
+		"spirit_stone_rate_per_hour": 10000,
+		"exp_rate_per_hour": 80000,
+		"offline_coefficient": {
+			"spirit_stones": 0.6,
+			"exp": 0.9
+		}
+	},
+	"faction_counter": {
+		"advantage_multiplier": 1.25,
+		"disadvantage_multiplier": 0.75,
+		"same_faction_bonus": {
+			"attack": 1.25,
+			"hp": 1.25,
+			"required_count": 5
+		}
+	},
+	"gacha": {
+		"single_cost": 200,
+		"ten_pull_cost": 2000,
+		"pity_threshold": 30,
+		"rates": {
+			"R": 0.75,
+			"SR": 0.20,
+			"SSR": 0.045,
+			"UR": 0.005
+		}
+	},
+	"hero_level": {
+		"max_level": 240,
+		"cost_base": 100,
+		"cost_exponent": 1.5,
+		"cost_currency": "spirit_stones",
+		"exp_cost_ratio": 0.8
+	},
+	"quality": {
+		"names": ["凡", "灵", "玄", "地", "天", "仙"],
+		"multipliers": [1.0, 1.5, 2.2, 3.5, 5.0, 8.0],
+		"dust_cost_per_tier": [0, 50, 100, 200, 400, 800],
+		"fragment_cost_per_tier": [0, 20, 40, 80, 160, 320]
+	},
+	"early_game_safety_net": {
+		"stages_1_to_20_enemy_debuff": 0.15,
+		"hidden": true
+	},
+	"battle": {
+		"max_rounds": 15,
+		"crit_base_rate": 0.05,
+		"crit_base_dmg": 1.5,
+		"damage_variance": 0.1
+	},
+	"stage_rewards": {
+		"spirit_stone_base": 100,
+		"spirit_stone_per_stage": 20,
+		"exp_base": 80,
+		"exp_per_stage": 15
+	},
+	"realms": {
+		"names": ["练气期", "筑基期", "金丹期", "元婴期", "化神期"],
+		"stages_per_realm": 40,
+		"tribulation_interval": 4
+	}
+}

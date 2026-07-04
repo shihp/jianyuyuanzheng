@@ -1,0 +1,209 @@
+%% 离线收益领取时序
+sequenceDiagram
+    autonumber
+    participant Main as main.gd
+    participant SM as SaveManager
+    participant IS as IdleSystem
+    participant Popup as OfflineRewardPopup
+    participant EM as EconomyManager
+    participant GM as GameManager
+
+    Main->>SM: load_game()
+    SM->>SM: 读取存档 player.last_save_time
+    SM-->>Main: load_completed(save_data)
+
+    Main->>IS: IdleSystem.new() + calculate_offline_rewards(last_save_time)
+    IS->>IS: elapsed = now - last_save_time (上限12h)
+    IS->>IS: rewards = rate × hours × coefficient
+    IS-->>Main: rewards {spirit_stones, exp, offline_hours}
+
+    alt rewards 非空
+        Main->>Popup: 实例化 OfflineRewardPopup
+        Main->>Popup: setup(rewards)
+        Popup-->>Main: 弹窗显示离线时长+收益
+
+        Note over Popup: 玩家看到弹窗，点击"领取"
+
+        Popup->>IS: collect_offline_rewards(rewards)
+        IS->>EM: add_spirit_stones(rewards.spirit_stones)
+        EM->>EM: _resources[spirit_stones] += amount
+        EM->>SM: set_data("resources", ...) + mark_dirty()
+        IS->>EM: add_exp(rewards.exp)
+        EM->>EM: _resources[exp] += amount
+        EM->>SM: set_data("resources", ...) + mark_dirty()
+        IS-->>Popup: offline_rewards_collected
+
+        Popup-->>Main: rewards_collected 信号
+        Main->>GM: change_scene(HOME)
+    else rewards 为空
+        Main->>GM: change_scene(HOME)
+    end
+
+%% 修士升级时序
+sequenceDiagram
+    autonumber
+    participant HD as hero_detail.gd
+    participant HM as HeroManager
+    participant EM as EconomyManager
+    participant SM as SaveManager
+
+    Note over HD: 玩家点击"升级"按钮
+
+    HD->>HM: can_level_up(hero_id)
+    HM->>HM: 检查 level < max_level (240)
+    HM->>EM: can_afford(spirit_stones, cost_stones)
+    EM-->>HM: true
+    HM->>EM: can_afford(exp, cost_exp)
+    EM-->>HM: true
+    HM-->>HD: true
+
+    HD->>HM: level_up(hero_id)
+    HM->>EM: spend(spirit_stones, cost_stones)
+    EM->>EM: _resources[spirit_stones] -= cost
+    EM->>EM: resource_changed.emit()
+    EM->>SM: set_data + mark_dirty()
+
+    HM->>EM: spend(exp, cost_exp)
+    EM->>EM: _resources[exp] -= cost
+    EM->>EM: resource_changed.emit()
+    EM->>SM: set_data + mark_dirty()
+
+    HM->>HM: _hero_levels[hero_id] += 1
+    HM->>HM: hero_leveled_up.emit(hero_id, new_level)
+    HM->>SM: save_now()
+
+    HM-->>HD: true (升级成功)
+    HD->>HD: _on_hero_leveled_up() → _refresh_ui()
+    Note over HD: 刷新属性显示 + 按钮成本
+
+%% 修士升品质时序
+sequenceDiagram
+    autonumber
+    participant HD as hero_detail.gd
+    participant HM as HeroManager
+    participant EM as EconomyManager
+    participant SM as SaveManager
+
+    Note over HD: 玩家点击"升品质"按钮
+
+    HD->>HM: can_quality_up(hero_id)
+    HM->>HM: 检查 quality < 5 (仙)
+    HM->>HM: 读取 balance.json quality.dust_cost_per_tier[quality+1]
+    HM->>HM: 读取 balance.json quality.fragment_cost_per_tier[quality+1]
+    HM->>EM: get_fragments(hero_id) >= fragment_cost?
+    HM->>EM: can_afford(dust, dust_cost)?
+    HM-->>HD: true
+
+    HD->>HM: quality_up(hero_id)
+    HM->>EM: spend(dust, dust_cost)
+    EM->>SM: set_data + mark_dirty()
+    HM->>EM: spend_fragments(hero_id, fragment_cost)
+    EM->>SM: set_data + mark_dirty()
+    HM->>HM: _hero_qualities[hero_id] += 1
+    HM->>HM: hero_quality_up.emit(hero_id, new_quality)
+    HM->>SM: save_now()
+
+    HM-->>HD: true
+    HD->>HD: _refresh_ui() 刷新品质+属性
+
+%% 异步战斗完整时序
+sequenceDiagram
+    autonumber
+    participant SM as StageMap
+    participant GM as GameManager
+    participant BS as battle.gd
+    participant BM as BattleManager
+    participant HM as HeroManager
+    participant StM as StageManager
+    participant EM as EconomyManager
+    participant Save as SaveManager
+
+    SM->>GM: go_battle()
+    GM->>BS: 实例化 battle.tscn
+
+    BS->>BM: battle_started.connect()
+    BS->>BM: battle_ended.connect()
+    BS->>BM: hero_attacked.connect()
+    BS->>BM: skill_ready.connect()
+    BS->>BM: round_started.connect()
+
+    BS->>HM: get_formation()
+    HM-->>BS: [hero_id, ...]
+    BS->>StM: get_current_stage()
+    StM-->>BS: stage_id
+
+    BS->>BM: start_battle(formation, stage_id)
+
+    BM->>HM: get_hero_stats(hid) for each hero
+    HM-->>BM: {atk, hp, speed, crit_rate, crit_dmg}
+    BM->>BM: _build_formation() → _player_formation (energy=0)
+
+    BM->>StM: get_stage_enemy_stats(stage_id)
+    StM->>StM: 早期保护: 1-20关 hp/atk ×0.85
+    StM-->>BM: {enemies, debuffed}
+    BM->>BM: _build_enemy_formation() → _enemy_formation
+
+    BM->>BM: battle_state = IN_PROGRESS
+    BM-->>BS: battle_started.emit(formation)
+    BS->>BS: _on_battle_started() → _refresh_units()
+
+    BM->>BM: _run_battle() [async]
+
+    loop 每回合 (最多15回合)
+        BM->>BM: await get_tree().create_timer(delay / speed_mult).timeout
+        BM->>BM: _current_round += 1
+        BM-->>BS: round_started.emit(round)
+        BS->>BS: _on_round_started() → 更新回合显示
+
+        BM->>BM: 按速度排序所有存活单位
+
+        loop 每个单位攻击
+            BM->>BM: _attack(unit)
+            BM->>BM: unit.energy += 25
+
+            alt unit.energy >= 100
+                BM-->>BS: skill_ready.emit(hero_id)
+                BS->>BS: 绝学按钮点亮
+
+                alt 玩家点击绝学按钮
+                    BS->>BM: use_skill(hero_id)
+                    BM->>BM: _use_skill_internal(unit)
+                    BM->>BM: skill_triggered.emit()
+                    BM-->>BS: skill_triggered.emit()
+                    BS->>BS: 显示绝学动画/日志
+                else 未手动触发
+                    BM->>BM: 回合末自动触发
+                end
+            end
+
+            BM->>BM: _calculate_damage(attacker, target)
+            BM->>BM: target.hp -= damage
+            BM-->>BS: hero_attacked.emit(attacker, target, damage, is_crit)
+            BS->>BS: _on_hero_attacked() → 更新HP条+战斗日志
+        end
+
+        BM->>BM: 检查 _is_team_wiped()
+        alt 敌方全灭
+            BM->>BM: _end_battle(true)
+        else 我方全灭
+            BM->>BM: _end_battle(false)
+        else 超过15回合
+            BM->>BM: _end_battle(false)
+        end
+    end
+
+    BM->>StM: get_stage_rewards(stage_id)
+    StM-->>BM: {spirit_stones, exp} + Boss关碎片
+
+    alt victory
+        BM->>BM: _calculate_rewards() → 含碎片
+        BM->>EM: add_spirit_stones() + add_exp()
+        BM->>EM: add_fragments() [Boss关]
+        BM->>StM: clear_stage(stage_id)
+    else defeat
+        BM->>StM: fail_stage(stage_id)
+    end
+
+    BM-->>BS: battle_ended.emit(victory, rewards)
+    BS->>BS: _on_battle_ended() → 显示结果面板
+    BS->>Save: save_now()

@@ -1,0 +1,82 @@
+[
+	{
+		"id": "skill_qingyun_jianjue",
+		"name": "青云剑诀",
+		"hero_id": "hero_zhengdao_001",
+		"type": "active",
+		"target": "front_row",
+		"target_count": 1,
+		"damage_mult": 1.5,
+		"effects": [],
+		"cooldown": 3,
+		"description": "对前排敌人造成攻击力150%的伤害"
+	},
+	{
+		"id": "skill_bishui_jinghua",
+		"name": "碧水净化",
+		"hero_id": "hero_zhengdao_002",
+		"type": "heal",
+		"target": "all_allies",
+		"target_count": 5,
+		"damage_mult": 1.2,
+		"effects": ["heal", "cleanse"],
+		"cooldown": 4,
+		"description": "治疗全体友军攻击力120%的生命"
+	},
+	{
+		"id": "skill_taiji_hudun",
+		"name": "太极护盾",
+		"hero_id": "hero_zhengdao_003",
+		"type": "buff",
+		"target": "self",
+		"target_count": 1,
+		"damage_mult": 0,
+		"effects": ["shield"],
+		"shield_ratio": 0.20,
+		"duration": 2,
+		"cooldown": 4,
+		"description": "获得最大生命值20%的护盾，持续2回合"
+	},
+	{
+		"id": "skill_xuehai_tuntian",
+		"name": "血海吞天",
+		"hero_id": "hero_modao_001",
+		"type": "active",
+		"target": "all_enemies",
+		"target_count": 5,
+		"damage_mult": 1.2,
+		"effects": ["lifesteal"],
+		"lifesteal_ratio": 0.30,
+		"cooldown": 4,
+		"description": "对全体敌人造成攻击力120%伤害，吸取30%为自身治疗"
+	},
+	{
+		"id": "skill_jiuwei_tianhuo",
+		"name": "九尾天火",
+		"hero_id": "hero_yaozu_002",
+		"type": "active",
+		"target": "random_enemies",
+		"target_count": 3,
+		"damage_mult": 1.4,
+		"effects": ["burn"],
+		"burn_dmg_ratio": 0.05,
+		"burn_duration": 3,
+		"cooldown": 3,
+		"description": "对随机3个敌人造成攻击力140%伤害，附加灼烧效果"
+	},
+	{
+		"id": "skill_dizang_pusa",
+		"name": "地狱不空",
+		"hero_id": "hero_fomen_001",
+		"type": "special",
+		"target": "all_allies",
+		"target_count": 5,
+		"damage_mult": 0,
+		"effects": ["revive", "damage_reduction"],
+		"revive_hp_ratio": 0.50,
+		"damage_reduction_ratio": 0.20,
+		"duration": 2,
+		"cooldown": 6,
+		"description": "复活一名阵亡友军并恢复50%生命，全体友军获得伤害减免20%"
+	}
+]

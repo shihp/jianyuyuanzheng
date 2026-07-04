@@ -1,0 +1,308 @@
+[
+	{
+		"id": 1,
+		"name": "山贼小卒",
+		"chapter": 1,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "出山后遇到的第一个敌人，试探虚实",
+		"recommended_power": 200,
+		"enemies": [
+			{"id": "enemy_1_0", "name": "山贼小卒", "faction": "modao", "hp": 250, "atk": 25, "def": 5, "speed": 70, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 100, "exp": 80},
+		"is_boss": false
+	},
+	{
+		"id": 2,
+		"name": "山贼头目",
+		"chapter": 1,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "山贼头目带着手下拦路抢劫",
+		"recommended_power": 280,
+		"enemies": [
+			{"id": "enemy_2_0", "name": "山贼头目", "faction": "modao", "hp": 320, "atk": 30, "def": 6, "speed": 72, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_2_1", "name": "山贼喽啰", "faction": "modao", "hp": 200, "atk": 20, "def": 3, "speed": 68, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 120, "exp": 90},
+		"is_boss": false
+	},
+	{
+		"id": 3,
+		"name": "荒野妖兽",
+		"chapter": 1,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "荒野中的妖兽成群出没",
+		"recommended_power": 400,
+		"enemies": [
+			{"id": "enemy_3_0", "name": "妖狼", "faction": "yaozu", "hp": 420, "atk": 38, "def": 8, "speed": 78, "skill_name": "撕咬", "skill_damage": 60},
+			{"id": "enemy_3_1", "name": "妖狐", "faction": "yaozu", "hp": 300, "atk": 30, "def": 5, "speed": 80, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 140, "exp": 100},
+		"is_boss": false
+	},
+	{
+		"id": 4,
+		"name": "妖狼王",
+		"chapter": 1,
+		"realm_name": "练气期",
+		"is_tribulation": true,
+		"description": "渡劫瓶颈，妖狼王拦路，突破方可入深山",
+		"recommended_power": 600,
+		"enemies": [
+			{"id": "enemy_4_0", "name": "妖狼王", "faction": "yaozu", "hp": 700, "atk": 55, "def": 12, "speed": 88, "skill_name": "狂噬", "skill_damage": 90},
+			{"id": "enemy_4_1", "name": "妖狼护卫", "faction": "yaozu", "hp": 300, "atk": 28, "def": 6, "speed": 72, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 160, "exp": 120, "dust": 5},
+		"is_boss": true
+	},
+	{
+		"id": 5,
+		"name": "魔修爪牙",
+		"chapter": 2,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "魔修门派外围弟子在此游荡",
+		"recommended_power": 500,
+		"enemies": [
+			{"id": "enemy_5_0", "name": "魔修弟子", "faction": "modao", "hp": 480, "atk": 42, "def": 9, "speed": 78, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_5_1", "name": "魔修弟子", "faction": "modao", "hp": 480, "atk": 42, "def": 9, "speed": 78, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 170, "exp": 110},
+		"is_boss": false
+	},
+	{
+		"id": 6,
+		"name": "魔修小队",
+		"chapter": 2,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "一支训练有素的魔修小队",
+		"recommended_power": 650,
+		"enemies": [
+			{"id": "enemy_6_0", "name": "魔修队长", "faction": "modao", "hp": 550, "atk": 48, "def": 10, "speed": 82, "skill_name": "血煞掌", "skill_damage": 75},
+			{"id": "enemy_6_1", "name": "魔修弟子", "faction": "modao", "hp": 380, "atk": 35, "def": 8, "speed": 75, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_6_2", "name": "魔修弟子", "faction": "modao", "hp": 380, "atk": 35, "def": 8, "speed": 75, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 190, "exp": 125},
+		"is_boss": false
+	},
+	{
+		"id": 7,
+		"name": "妖蛇窟",
+		"chapter": 2,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "毒蛇盘踞的洞穴，步步杀机",
+		"recommended_power": 800,
+		"enemies": [
+			{"id": "enemy_7_0", "name": "妖蛇", "faction": "yaozu", "hp": 520, "atk": 46, "def": 10, "speed": 82, "skill_name": "毒雾", "skill_damage": 70},
+			{"id": "enemy_7_1", "name": "妖蛇", "faction": "yaozu", "hp": 520, "atk": 46, "def": 10, "speed": 82, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_7_2", "name": "妖蛇幼崽", "faction": "yaozu", "hp": 350, "atk": 30, "def": 6, "speed": 70, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 210, "exp": 140},
+		"is_boss": false
+	},
+	{
+		"id": 8,
+		"name": "蛟龙化身",
+		"chapter": 2,
+		"realm_name": "练气期",
+		"is_tribulation": true,
+		"description": "渡劫瓶颈，蛟龙化身显形，渡过方可继续修炼",
+		"recommended_power": 1050,
+		"enemies": [
+			{"id": "enemy_8_0", "name": "蛟龙化身", "faction": "yaozu", "hp": 1200, "atk": 72, "def": 16, "speed": 92, "skill_name": "蛟龙摆尾", "skill_damage": 120},
+			{"id": "enemy_8_1", "name": "蛟蛇护卫", "faction": "yaozu", "hp": 450, "atk": 38, "def": 8, "speed": 78, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 240, "exp": 165, "dust": 8},
+		"is_boss": true
+	},
+	{
+		"id": 9,
+		"name": "佛魔战场",
+		"chapter": 3,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "佛门与魔道交战的遗迹，怨气冲天",
+		"recommended_power": 900,
+		"enemies": [
+			{"id": "enemy_9_0", "name": "堕佛魔僧", "faction": "modao", "hp": 580, "atk": 50, "def": 11, "speed": 82, "skill_name": "血佛掌", "skill_damage": 80},
+			{"id": "enemy_9_1", "name": "魔修弟子", "faction": "modao", "hp": 450, "atk": 42, "def": 9, "speed": 78, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_9_2", "name": "堕落武僧", "faction": "fomen", "hp": 500, "atk": 44, "def": 10, "speed": 80, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 230, "exp": 155},
+		"is_boss": false
+	},
+	{
+		"id": 10,
+		"name": "魔修长老",
+		"chapter": 3,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "魔修长老坐镇此地，修为深厚",
+		"recommended_power": 1050,
+		"enemies": [
+			{"id": "enemy_10_0", "name": "魔修长老", "faction": "modao", "hp": 750, "atk": 58, "def": 13, "speed": 85, "skill_name": "血煞大法", "skill_damage": 95},
+			{"id": "enemy_10_1", "name": "魔修护卫", "faction": "modao", "hp": 500, "atk": 45, "def": 10, "speed": 80, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 250, "exp": 170},
+		"is_boss": false
+	},
+	{
+		"id": 11,
+		"name": "天雷试炼",
+		"chapter": 3,
+		"realm_name": "练气期",
+		"is_tribulation": false,
+		"description": "天地雷劫降临，考验修士根基",
+		"recommended_power": 1200,
+		"enemies": [
+			{"id": "enemy_11_0", "name": "雷灵", "faction": "zhengdao", "hp": 850, "atk": 62, "def": 12, "speed": 88, "skill_name": "天雷诀", "skill_damage": 100},
+			{"id": "enemy_11_1", "name": "雷灵", "faction": "zhengdao", "hp": 700, "atk": 55, "def": 11, "speed": 85, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 270, "exp": 185},
+		"is_boss": false
+	},
+	{
+		"id": 12,
+		"name": "天劫降临",
+		"chapter": 3,
+		"realm_name": "练气期",
+		"is_tribulation": true,
+		"description": "渡劫瓶颈，天劫降临，渡过可入筑基期",
+		"recommended_power": 1500,
+		"enemies": [
+			{"id": "enemy_12_0", "name": "天劫化身", "faction": "zhengdao", "hp": 1800, "atk": 88, "def": 20, "speed": 98, "skill_name": "天雷灭世", "skill_damage": 150},
+			{"id": "enemy_12_1", "name": "雷灵护卫", "faction": "zhengdao", "hp": 600, "atk": 48, "def": 10, "speed": 82, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 300, "exp": 210, "dust": 10},
+		"is_boss": true
+	},
+	{
+		"id": 13,
+		"name": "筑基魔修",
+		"chapter": 4,
+		"realm_name": "筑基期",
+		"is_tribulation": false,
+		"description": "筑基期魔修在此布阵，实力大增",
+		"recommended_power": 1400,
+		"enemies": [
+			{"id": "enemy_13_0", "name": "筑基魔修", "faction": "modao", "hp": 950, "atk": 68, "def": 15, "speed": 86, "skill_name": "血煞掌", "skill_damage": 110},
+			{"id": "enemy_13_1", "name": "魔修弟子", "faction": "modao", "hp": 700, "atk": 52, "def": 12, "speed": 82, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 320, "exp": 220},
+		"is_boss": false
+	},
+	{
+		"id": 14,
+		"name": "筑基妖修",
+		"chapter": 4,
+		"realm_name": "筑基期",
+		"is_tribulation": false,
+		"description": "筑基期妖修盘踞山林",
+		"recommended_power": 1600,
+		"enemies": [
+			{"id": "enemy_14_0", "name": "筑基妖修", "faction": "yaozu", "hp": 850, "atk": 62, "def": 13, "speed": 84, "skill_name": "妖风斩", "skill_damage": 100},
+			{"id": "enemy_14_1", "name": "妖修弟子", "faction": "yaozu", "hp": 750, "atk": 55, "def": 12, "speed": 82, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_14_2", "name": "妖修弟子", "faction": "yaozu", "hp": 750, "atk": 55, "def": 12, "speed": 82, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 340, "exp": 235},
+		"is_boss": false
+	},
+	{
+		"id": 15,
+		"name": "筑基佛修",
+		"chapter": 4,
+		"realm_name": "筑基期",
+		"is_tribulation": false,
+		"description": "筑基期佛修坐禅修炼，功力深厚",
+		"recommended_power": 1850,
+		"enemies": [
+			{"id": "enemy_15_0", "name": "筑基佛修", "faction": "fomen", "hp": 1000, "atk": 72, "def": 15, "speed": 86, "skill_name": "金刚掌", "skill_damage": 115},
+			{"id": "enemy_15_1", "name": "武僧", "faction": "fomen", "hp": 800, "atk": 60, "def": 13, "speed": 83, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_15_2", "name": "武僧", "faction": "fomen", "hp": 800, "atk": 60, "def": 13, "speed": 83, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 360, "exp": 250},
+		"is_boss": false
+	},
+	{
+		"id": 16,
+		"name": "魔佛降世",
+		"chapter": 4,
+		"realm_name": "筑基期",
+		"is_tribulation": true,
+		"description": "渡劫瓶颈，魔佛降世，此关凶险万分",
+		"recommended_power": 2200,
+		"enemies": [
+			{"id": "enemy_16_0", "name": "魔佛", "faction": "modao", "hp": 2600, "atk": 102, "def": 22, "speed": 100, "skill_name": "魔佛降世", "skill_damage": 180},
+			{"id": "enemy_16_1", "name": "堕佛魔僧", "faction": "modao", "hp": 900, "atk": 65, "def": 14, "speed": 85, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 400, "exp": 280, "dust": 12},
+		"is_boss": true
+	},
+	{
+		"id": 17,
+		"name": "正道围剿",
+		"chapter": 5,
+		"realm_name": "筑基期",
+		"is_tribulation": false,
+		"description": "正道修士集结围剿，来势汹汹",
+		"recommended_power": 2000,
+		"enemies": [
+			{"id": "enemy_17_0", "name": "正道剑修", "faction": "zhengdao", "hp": 1050, "atk": 78, "def": 16, "speed": 90, "skill_name": "天罡剑", "skill_damage": 125},
+			{"id": "enemy_17_1", "name": "正道弟子", "faction": "zhengdao", "hp": 850, "atk": 62, "def": 14, "speed": 86, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_17_2", "name": "正道弟子", "faction": "zhengdao", "hp": 850, "atk": 62, "def": 14, "speed": 86, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 380, "exp": 265},
+		"is_boss": false
+	},
+	{
+		"id": 18,
+		"name": "妖王领域",
+		"chapter": 5,
+		"realm_name": "筑基期",
+		"is_tribulation": false,
+		"description": "妖王领地，万妖臣服",
+		"recommended_power": 2300,
+		"enemies": [
+			{"id": "enemy_18_0", "name": "妖将", "faction": "yaozu", "hp": 1150, "atk": 82, "def": 17, "speed": 92, "skill_name": "妖王之怒", "skill_damage": 135},
+			{"id": "enemy_18_1", "name": "妖修精锐", "faction": "yaozu", "hp": 900, "atk": 68, "def": 15, "speed": 88, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_18_2", "name": "妖修精锐", "faction": "yaozu", "hp": 900, "atk": 68, "def": 15, "speed": 88, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 400, "exp": 280},
+		"is_boss": false
+	},
+	{
+		"id": 19,
+		"name": "九幽魔窟",
+		"chapter": 5,
+		"realm_name": "筑基期",
+		"is_tribulation": false,
+		"description": "九幽深处，魔气滔天",
+		"recommended_power": 2600,
+		"enemies": [
+			{"id": "enemy_19_0", "name": "九幽魔将", "faction": "modao", "hp": 1250, "atk": 88, "def": 18, "speed": 94, "skill_name": "九幽灭魂", "skill_damage": 150},
+			{"id": "enemy_19_1", "name": "魔修精锐", "faction": "modao", "hp": 950, "atk": 72, "def": 16, "speed": 90, "skill_name": "", "skill_damage": 0},
+			{"id": "enemy_19_2", "name": "魔修精锐", "faction": "modao", "hp": 950, "atk": 72, "def": 16, "speed": 90, "skill_name": "", "skill_damage": 0}
+		],
+		"rewards": {"spirit_stones": 420, "exp": 295},
+		"is_boss": false
+	},
+	{
+		"id": 20,
+		"name": "筑基天劫",
+		"chapter": 5,
+		"realm_name": "筑基期",
+		"is_tribulation": true,
+		"description": "渡劫瓶颈，筑基天劫降临，渡过可入金丹期",
+		"recommended_power": 3000,
+		"enemies": [
+			{"id": "enemy_20_0", "name": "天劫雷兽", "faction": "zhengdao", "hp": 3500, "atk": 120, "def": 25, "speed": 105, "skill_name": "天雷寂灭", "skill_damage": 220}
+		],
+		"rewards": {"spirit_stones": 500, "exp": 350, "dust": 15},
+		"is_boss": true
+	}
+]

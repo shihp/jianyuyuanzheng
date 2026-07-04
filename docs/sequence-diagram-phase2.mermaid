@@ -1,0 +1,197 @@
+%% Phase 2 时序图
+
+%% ===== 1. 同势力加成战斗流程 =====
+sequenceDiagram
+    participant UI as battle.gd
+    participant BM as BattleManager
+    participant HM as HeroManager
+    participant FS as FormationSystem
+    participant BL as balance.json
+
+    UI->>BM: start_battle(hero_ids, stage_id)
+    BM->>BM: _build_formation(hero_ids, true)
+    
+    loop 每个 hero_id
+        BM->>HM: get_hero_stats(hid)
+        HM-->>BM: {atk, hp, speed, ...}
+        BM->>HM: get_hero_data(hid)
+        HM-->>BM: {skill_name, ...}
+        BM->>HM: get_hero_faction(hid)
+        HM-->>BM: "zhengdao"
+    end
+    
+    Note over BM: 构建 5 个单位完成
+    
+    BM->>BM: _apply_faction_bonus(formation)
+    BM->>BL: 读取 faction_counter.same_faction_bonus
+    Note over BM: 统计 faction 分布<br/>zhengdao: 5人 ≥ required_count(5)
+    loop 同势力单位
+        Note over BM: atk *= 1.25<br/>hp *= 1.25<br/>max_hp *= 1.25
+    end
+    
+    BM-->>UI: battle_started.emit(formation)
+    UI->>BM: get_faction_bonus_info()
+    BM-->>UI: {active: true, faction: "正道", atk_mult: 1.25, hp_mult: 1.25}
+    Note over UI: 显示"同势力加成：攻击+25% 生命+25%"
+    
+    BM->>BM: _build_enemy_formation(stage_id)
+    BM->>BM: _run_battle()
+
+
+%% ===== 2. 抽卡 + 心愿单 + 碎片转换流程 =====
+sequenceDiagram
+    participant UI as gacha.gd
+    participant GM as GachaManager
+    participant GJ as gacha.json
+    participant HM as HeroManager
+    participant EM as EconomyManager
+    participant SM as SaveManager
+
+    Note over UI: 玩家点击单抽
+    UI->>GM: single_pull()
+    GM->>GM: get_single_pull_cost()
+    GM->>GJ: 读取 active_banner.cost_per_pull
+    GJ-->>GM: 200
+    GM->>EM: spend_jade(200)
+    EM-->>GM: true
+    
+    GM->>GM: _do_pull()
+    GM->>GM: _roll_rarity()
+    GM->>GJ: 读取 active_banner.rates
+    GJ-->>GM: {R:0.75, SR:0.20, ...}
+    Note over GM: randf() → rarity=2 (SR)
+    
+    GM->>GM: 保底检查 (pity_counter < threshold)
+    
+    GM->>GM: _pick_hero_by_rarity(2)
+    Note over GM: rarity=2 ≥ min_rarity(2)<br/>wishlist 非空<br/>randf() < 0.5 → 触发心愿单
+    GM->>GM: 从 wishlist 筛选 rarity=2 修士
+    Note over GM: 命中: hero_zhengdao_001
+    
+    GM->>HM: is_owned("hero_zhengdao_001")
+    HM-->>GM: true (已拥有)
+    
+    Note over GM: is_new = false
+    GM->>GM: _convert_to_fragments("hero_zhengdao_001")
+    GM->>HM: get_hero_rarity("hero_zhengdao_001")
+    HM-->>GM: 2 (SR)
+    GM->>GJ: 读取 fragment_conversion["SR"]
+    GJ-->>GM: 30
+    GM->>EM: add_fragments("hero_zhengdao_001", 30)
+    
+    GM->>SM: set_data("gacha", {...})
+    Note over SM: 保存 wishlist + pity_counter + active_banner
+    
+    GM-->>UI: pull_completed.emit([result])
+    Note over UI: 显示 [SR] 李寒山 [重复 → 碎片 ×30]
+
+
+%% ===== 3. 渡劫关挑战流程 =====
+sequenceDiagram
+    participant Player as 玩家
+    participant SM_UI as stage_map.gd
+    participant StageM as StageManager
+    participant SJ as stages.json
+    participant Battle as battle.gd
+    participant BM as BattleManager
+
+    Player->>SM_UI: 进入关卡地图
+    SM_UI->>StageM: get_current_stage()
+    StageM-->>SM_UI: 8
+    SM_UI->>StageM: get_stage_data(8)
+    StageM->>SJ: 读取 stage 8 数据
+    SJ-->>StageM: {name:"魔修长老", realm_name:"练气期", is_tribulation:true}
+    StageM-->>SM_UI: stage_data
+    SM_UI->>StageM: get_realm_name(8)
+    StageM-->>SM_UI: "练气期"
+    SM_UI->>StageM: is_tribulation_stage(8)
+    StageM-->>SM_UI: true
+    
+    Note over SM_UI: 显示【练气期】第 8 关<br/>⚡渡劫 — 魔修长老
+    
+    Player->>SM_UI: 点击斗法
+    SM_UI->>Battle: 场景切换到 battle
+    Battle->>StageM: get_current_stage()
+    StageM-->>Battle: 8
+    Battle->>StageM: is_tribulation_stage(8)
+    StageM-->>Battle: true
+    Note over Battle: 显示"⚡ 渡劫瓶颈 — 此关难度提升"
+    
+    Battle->>BM: start_battle(formation, 8)
+    BM->>StageM: get_stage_enemy_stats(8)
+    Note over StageM: stage 8 ≤ 20 → 早期保护<br/>敌人属性 ×0.85
+    StageM-->>BM: {enemies: [...], debuffed: true}
+    
+    BM->>BM: _build_formation + _apply_faction_bonus
+    BM->>BM: _run_battle()
+    
+    alt 胜利
+        BM->>StageM: clear_stage(8)
+        StageM->>StageM: _current_stage = 9
+        Note over StageM: 检测: stage 9 非 tribulation<br/>stage 12 为下一个渡劫关
+        StageM-->>SM_UI: stage_unlocked.emit(9)
+    else 失败
+        BM->>StageM: fail_stage(8)
+        StageM->>StageM: _consecutive_losses += 1
+        alt 连败 ≥ 3
+            StageM-->>SM_UI: stuck_detected.emit(8, suggestions)
+            Note over SM_UI: 显示卡关建议
+        end
+    end
+
+
+%% ===== 4. 心愿单设置流程 =====
+sequenceDiagram
+    participant UI as gacha.gd
+    participant GM as GachaManager
+    participant HM as HeroManager
+    participant HJ as heroes.json
+    participant SM as SaveManager
+
+    Note over UI: 玩家打开心愿单面板
+    UI->>GM: get_wishlist()
+    GM-->>UI: ["hero_zhengdao_002", "hero_modao_003", ""]
+    
+    Note over UI: 显示当前心愿单(2/3)
+    UI->>HJ: 读取所有 SR+ 修士列表
+    HJ-->>UI: [{id, name, rarity, faction}, ...]
+    
+    Note over UI: 玩家选择第 3 个: hero_yaozu_005
+    UI->>GM: set_wishlist(["hero_zhengdao_002", "hero_modao_003", "hero_yaozu_005"])
+    
+    GM->>GM: 校验 max_size ≤ 3 ✓
+    loop 每个 hero_id
+        GM->>HM: get_hero_rarity(hid)
+        HM-->>GM: 3 (SSR) ≥ min_rarity(2) ✓
+    end
+    GM->>GM: 无重复 ✓
+    
+    GM->>SM: set_data("gacha", {wishlist: [...], ...})
+    SM->>SM: mark_dirty()
+    
+    GM-->>UI: true (设置成功)
+    Note over UI: 更新心愿单显示(3/3)
+
+
+%% ===== 5. 存档迁移流程 (v1 → v2) =====
+sequenceDiagram
+    participant Game as 游戏启动
+    participant SM as SaveManager
+    participant FS as 文件系统
+    participant GM as GachaManager
+
+    Game->>SM: load_game()
+    SM->>FS: 读取 save_data.json
+    FS-->>SM: {version: 1, gacha: {total_pulls: 5, pity_counter: 3}}
+    
+    SM->>SM: _migrate_save(data)
+    Note over SM: version 1 → 2
+    Note over SM: gacha.wishlist 不存在 → 补全为 []
+    Note over SM: gacha.active_banner 不存在 → 补全为 "normal"
+    SM-->>SM: {version: 2, gacha: {total_pulls: 5, pity_counter: 3, wishlist: [], active_banner: "normal"}}
+    
+    SM-->>GM: load_completed.emit(save_data)
+    GM->>GM: _on_load_completed(save_data)
+    Note over GM: _wishlist = [] (空，未设置)<br/>_active_banner_id = "normal"
+    GM->>GM: _load_gacha_config()
+    Note over GM: 从 gacha.json 加载配置<br/>_fragment_conversion = {R:10, SR:30, ...}

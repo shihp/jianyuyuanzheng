@@ -1,0 +1,186 @@
+[gd_scene format=3 uid="uid://d3c4e5f6g7h8"]
+
+[ext_resource type="Script" uid="uid://bx7yj45a7fnpk" path="res://scenes/battle/battle.gd" id="1_btl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_btl"]
+font_size = 18
+font_color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Battle" type="Control" unique_id=1295247770]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_btl")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1145658022]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.08, 0.05, 1)
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=791258294]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="VBox" unique_id=511253140]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.7, 0.3, 1)
+theme_override_font_sizes/font_size = 28
+text = "⚔ 斗法"
+horizontal_alignment = 1
+
+[node name="BattleArea" type="Control" parent="VBox" unique_id=54302356]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EnemySide" type="VBoxContainer" parent="VBox/BattleArea" unique_id=2119941799]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_right = -20.0
+offset_bottom = 300.0
+grow_horizontal = 2
+
+[node name="EnemyTitle" type="Label" parent="VBox/BattleArea/EnemySide" unique_id=1808164175]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.3, 0.3, 1)
+text = "敌方"
+label_settings = SubResource("LabelSettings_btl")
+
+[node name="PlayerSide" type="VBoxContainer" parent="VBox/BattleArea" unique_id=743834733]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -350.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PlayerTitle" type="Label" parent="VBox/BattleArea/PlayerSide" unique_id=770390506]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.7, 0.9, 1)
+text = "我方"
+label_settings = SubResource("LabelSettings_btl")
+
+[node name="BattleLog" type="Label" parent="VBox/BattleArea" unique_id=248842226]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -40.0
+offset_right = 300.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_btl")
+horizontal_alignment = 1
+
+[node name="RoundLabel" type="Label" parent="VBox/BattleArea" unique_id=107252815]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -30.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.8, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "第 0 回合"
+horizontal_alignment = 1
+
+[node name="SpeedBar" type="HBoxContainer" parent="VBox" unique_id=778030978]
+layout_mode = 2
+alignment = 1
+
+[node name="Speed1x" type="Button" parent="VBox/SpeedBar" unique_id=2084785414]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1x"
+
+[node name="Speed15x" type="Button" parent="VBox/SpeedBar" unique_id=1344657675]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1.5x"
+
+[node name="Speed2x" type="Button" parent="VBox/SpeedBar" unique_id=1274808126]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "2x"
+
+[node name="SkillButton" type="Button" parent="VBox" unique_id=153261960]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+disabled = true
+text = "绝学"
+
+[node name="ResultPanel" type="Panel" parent="VBox" unique_id=1215526888]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="VBox/ResultPanel" unique_id=1533787849]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="RewardLabel" type="Label" parent="VBox/ResultPanel" unique_id=963085033]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 65.0
+offset_right = -10.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="VBox/ResultPanel" unique_id=176497544]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -50.0
+offset_right = -50.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "继续"

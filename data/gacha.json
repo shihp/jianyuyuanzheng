@@ -1,0 +1,57 @@
+{
+	"banners": [
+		{
+			"banner_id": "normal",
+			"banner_name": "寻仙台",
+			"banner_type": "normal",
+			"description": "普通寻仙，可获取全部修士",
+			"cost_per_pull": 200,
+			"cost_per_ten": 2000,
+			"pity_threshold": 30,
+			"rates": {"R": 0.75, "SR": 0.20, "SSR": 0.045, "UR": 0.005},
+			"featured_heroes": [],
+			"available_heroes": "all"
+		},
+		{
+			"banner_id": "zhengdao_up",
+			"banner_name": "正道精选",
+			"banner_type": "faction",
+			"description": "正道修士概率提升，UP: 周紫虚",
+			"cost_per_pull": 200,
+			"cost_per_ten": 2000,
+			"pity_threshold": 30,
+			"rates": {"R": 0.65, "SR": 0.25, "SSR": 0.085, "UR": 0.015},
+			"featured_heroes": ["hero_zhengdao_006"],
+			"available_heroes": ["hero_zhengdao_001", "hero_zhengdao_002", "hero_zhengdao_003", "hero_zhengdao_004", "hero_zhengdao_005", "hero_zhengdao_006"]
+		},
+		{
+			"banner_id": "modao_up",
+			"banner_name": "魔道精选",
+			"banner_type": "faction",
+			"description": "魔道修士概率提升，UP: 冥河老祖",
+			"cost_per_pull": 200,
+			"cost_per_ten": 2000,
+			"pity_threshold": 30,
+			"rates": {"R": 0.65, "SR": 0.25, "SSR": 0.085, "UR": 0.015},
+			"featured_heroes": ["hero_modao_004"],
+			"available_heroes": ["hero_modao_001", "hero_modao_002", "hero_modao_003", "hero_modao_004", "hero_modao_005", "hero_modao_006"]
+		}
+	],
+	"pity_rules": {
+		"soft_pity_start": 25,
+		"hard_pity": 30,
+		"pity_rarity_min": 3,
+		"pity_reset_on_hit": true
+	},
+	"fragment_conversion": {
+		"R": 10,
+		"SR": 30,
+		"SSR": 80,
+		"UR": 200
+	},
+	"wishlist": {
+		"max_size": 3,
+		"min_rarity": 2,
+		"probability": 0.5
+	}
+}

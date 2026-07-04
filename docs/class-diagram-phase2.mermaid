@@ -1,0 +1,210 @@
+%% Phase 2 类图 — 增量变更
+
+classDiagram
+    direction TB
+
+    %% ===== BattleManager (修改) =====
+    class BattleManager {
+        ==Phase 2 修改==
+        -_balance_cache: Dictionary
+        -_player_formation: Array[Dictionary]
+        -_enemy_formation: Array[Dictionary]
+        -_stage_id: int
+        +_load_balance_config() void
+        +_build_formation(hero_ids: Array[String], is_player: bool) Array[Dictionary]
+        +_apply_faction_bonus(formation: Array[Dictionary]) void
+        +get_faction_bonus_info() Dictionary
+        +_calculate_damage(attacker: Dictionary, defender: Dictionary) int
+        +start_battle(player_hero_ids: Array[String], stage_id: int) void
+    }
+
+    %% ===== FormationSystem (修改) =====
+    class FormationSystem {
+        <<static>>
+        ==Phase 2 修改==
+        +validate(hero_ids: Array[String]) Dictionary
+        +get_faction_distribution(hero_ids: Array[String]) Dictionary
+        +get_best_faction_bonus(hero_ids: Array[String]) Dictionary
+        +calculate_power(hero_ids: Array[String]) int
+        +suggest_formation(hero_ids: Array[String]) Array[String]
+    }
+
+    %% ===== StageManager (修改) =====
+    class StageManager {
+        ==Phase 2 新增方法==
+        -_stage_db: Dictionary
+        -_current_stage: int
+        -_max_stage: int
+        +get_current_stage() int
+        +get_stage_data(stage_id: int) Dictionary
+        +get_stage_enemy_stats(stage_id: int) Dictionary
+        +clear_stage(stage_id: int, stars: int) void
+        +fail_stage(stage_id: int) void
+        +get_realm_name(stage_id: int) String
+        +is_tribulation_stage(stage_id: int) bool
+        +get_tribulation_info(stage_id: int) Dictionary
+        +get_realm_progress() Dictionary
+    }
+
+    %% ===== GachaManager (修改) =====
+    class GachaManager {
+        ==Phase 2 重大修改==
+        -_gacha_config: Dictionary
+        -_active_banner_id: String
+        -_wishlist: Array[String]
+        -_fragment_conversion: Dictionary
+        -_pity_counter: int
+        -_total_pulls: int
+        +_load_gacha_config() void
+        +single_pull() Dictionary
+        +ten_pull() Array
+        +get_single_pull_cost() int
+        +get_ten_pull_cost() int
+        +get_pity_threshold() int
+        +get_rates() Dictionary
+        +get_banners() Array
+        +get_active_banner() Dictionary
+        +set_active_banner(banner_id: String) void
+        +get_wishlist() Array[String]
+        +set_wishlist(hero_ids: Array[String]) bool
+        +clear_wishlist() void
+        +_do_pull() Dictionary
+        +_roll_rarity() int
+        +_pick_hero_by_rarity(rarity: int) String
+        +_convert_to_fragments(hero_id: String) int
+        +_force_pull_rarity(rarity: int) Dictionary
+        +_load_from_save() void
+        +_persist() void
+    }
+
+    %% ===== HeroManager (修改) =====
+    class HeroManager {
+        ==Phase 2 修改 add_hero()==
+        -_hero_db: Dictionary
+        -_owned_heroes: Array[String]
+        -_formation: Array[String]
+        +add_hero(hero_id: String) bool
+        +is_owned(hero_id: String) bool
+        +get_hero_stats(hero_id: String) Dictionary
+        +get_hero_rarity(hero_id: String) int
+        +get_hero_faction(hero_id: String) String
+        +get_formation() Array[String]
+        +level_up(hero_id: String) bool
+        +quality_up(hero_id: String) bool
+    }
+
+    %% ===== SaveManager (修改) =====
+    class SaveManager {
+        ==Phase 2 v1→v2==
+        -_save_data: Dictionary
+        +SAVE_VERSION: int = 2
+        +_get_default_save_data() Dictionary
+        +_migrate_save(data: Dictionary) Dictionary
+        +load_game() bool
+        +get_data(section: String) Dictionary
+        +set_data(section: String, data: Dictionary) void
+        +save_now() void
+    }
+
+    %% ===== StageData (修改) =====
+    class StageData {
+        ==Phase 2 新增字段==
+        +id: int
+        +name: String
+        +chapter: int
+        +realm_name: String
+        +is_tribulation: bool
+        +is_boss: bool
+        +enemies: Array
+        +rewards: Dictionary
+        +from_dict(data: Dictionary) void
+        +to_dict() Dictionary
+    }
+
+    %% ===== GachaData (修改) =====
+    class GachaData {
+        ==Phase 2 新增字段==
+        +banner_id: String
+        +banner_name: String
+        +cost_per_pull: int
+        +cost_per_ten: int
+        +pity_threshold: int
+        +rates: Dictionary
+        +featured_heroes: Array
+        +available_heroes: Array
+        +wishlist_config: Dictionary
+        +from_dict(data: Dictionary) void
+        +get_rarity_for_roll(roll: float) int
+    }
+
+    %% ===== 关系 =====
+    BattleManager --> HeroManager : get_hero_stats / get_hero_faction
+    BattleManager --> StageManager : get_stage_enemy_stats / clear_stage
+    BattleManager --> EconomyManager : _apply_rewards
+    BattleManager ..> JSONLoader : load_dict("balance.json")
+
+    FormationSystem --> HeroManager : get_hero_faction / get_hero_stats
+    FormationSystem ..> JSONLoader : load_dict("balance.json")
+
+    StageManager ..> JSONLoader : load_array("stages.json")
+    StageManager --> HeroManager : get_owned_heroes (卡关建议)
+    StageManager --> EconomyManager : get_amount (卡关建议)
+
+    GachaManager --> HeroManager : is_owned / add_hero / get_hero_rarity
+    GachaManager --> EconomyManager : spend_jade / add_fragments
+    GachaManager --> SaveManager : get_data / set_data
+    GachaManager ..> JSONLoader : load_dict("gacha.json")
+
+    HeroManager --> EconomyManager : add_fragments (已移除此调用)
+    HeroManager --> SaveManager : get_data / set_data
+    HeroManager ..> JSONLoader : load_array("heroes.json") / load_dict("balance.json")
+
+    SaveManager --> GachaManager : load_completed signal
+    SaveManager --> HeroManager : load_completed signal
+    SaveManager --> StageManager : load_completed signal
+
+    %% ===== 场景脚本关系 =====
+    class BattleScene {
+        scenes/battle/battle.gd
+        +_on_battle_started(formation: Array)
+        +_on_battle_ended(victory: bool, rewards: Dictionary)
+        显示同势力加成提示
+        显示渡劫瓶颈提示
+    }
+
+    class StageMapScene {
+        scenes/stage/stage_map.gd
+        +_update_title()
+        +_populate_stage_list()
+        显示境界名称
+        显示渡劫标记
+    }
+
+    class GachaScene {
+        scenes/gacha/gacha.gd
+        +_on_single_pull_pressed()
+        +_on_ten_pull_pressed()
+        +_display_results(results: Array)
+        心愿单选择UI
+        概率公示
+        碎片转换反馈
+    }
+
+    class HomeScene {
+        scenes/home/home.gd
+        +_update_resources()
+        显示境界+关卡进度
+    }
+
+    class TopBarScene {
+        scenes/ui/top_bar.gd
+        +_refresh()
+        显示境界+关卡
+    }
+
+    BattleScene --> BattleManager : signal connections
+    BattleScene --> StageManager : is_tribulation_stage
+    StageMapScene --> StageManager : get_realm_name / is_tribulation_stage
+    GachaScene --> GachaManager : single_pull / ten_pull / get_wishlist
+    HomeScene --> StageManager : get_current_stage / get_realm_name
+    TopBarScene --> StageManager : get_current_stage / get_realm_name

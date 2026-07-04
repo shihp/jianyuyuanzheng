@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://j9k0l1m2n3o4"]
+
+[ext_resource type="Script" path="res://scenes/stage/stage_map.gd" id="1_stgm"]
+[ext_resource type="PackedScene" path="res://scenes/ui/nav_bar.tscn" id="2_nav"]
+
+[node name="StageMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_stgm")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.06, 0.09, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+layout_mode = 2
+text = "关卡地图"
+theme_override_font_sizes/font_size = 26
+
+[node name="PowerLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+text = "阵容战力: 0  /  推荐: 0"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StageContainer" type="VBoxContainer" parent="VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BattleButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+text = "开始斗法"
+theme_override_font_sizes/font_size = 24
+
+[node name="NavBar" parent="." instance=ExtResource("2_nav")]
+layout_mode = 1
+offset_top = -60.0

@@ -1,0 +1,82 @@
+[
+	{
+		"id": "item_spirit_stone_pack_s",
+		"name": "灵石包(小)",
+		"type": "currency_pack",
+		"description": "包含1000灵石",
+		"effect": {"spirit_stones": 1000},
+		"price_jade": 50,
+		"stackable": true,
+		"max_stack": 99
+	},
+	{
+		"id": "item_spirit_stone_pack_m",
+		"name": "灵石包(中)",
+		"type": "currency_pack",
+		"description": "包含6000灵石",
+		"effect": {"spirit_stones": 6000},
+		"price_jade": 280,
+		"stackable": true,
+		"max_stack": 99
+	},
+	{
+		"id": "item_spirit_stone_pack_l",
+		"name": "灵石包(大)",
+		"type": "currency_pack",
+		"description": "包含15000灵石",
+		"effect": {"spirit_stones": 15000},
+		"price_jade": 680,
+		"stackable": true,
+		"max_stack": 99
+	},
+	{
+		"id": "item_dust_pack_s",
+		"name": "灵尘包(小)",
+		"type": "currency_pack",
+		"description": "包含100灵尘",
+		"effect": {"dust": 100},
+		"price_jade": 100,
+		"stackable": true,
+		"max_stack": 99
+	},
+	{
+		"id": "item_exp_pill",
+		"name": "修为丹",
+		"type": "exp_item",
+		"description": "直接获得5000修为",
+		"effect": {"exp": 5000},
+		"price_jade": 30,
+		"stackable": true,
+		"max_stack": 99
+	},
+	{
+		"id": "item_hero_exp_pill_s",
+		"name": "修炼丹(小)",
+		"type": "hero_exp",
+		"description": "指定修士获得5000经验",
+		"effect": {"hero_exp": 5000},
+		"price_jade": 20,
+		"stackable": true,
+		"max_stack": 99
+	},
+	{
+		"id": "item_pity_reset",
+		"name": "天命令",
+		"type": "special",
+		"description": "重置抽卡保底计数",
+		"effect": {"reset_pity": true},
+		"price_jade": 500,
+		"stackable": true,
+		"max_stack": 10
+	},
+	{
+		"id": "item_formation_slot",
+		"name": "阵容扩展符",
+		"type": "special",
+		"description": "解锁第6个阵容位(MVP后版本)",
+		"effect": {"unlock_formation_slot": 6},
+		"price_jade": 2000,
+		"stackable": false,
+		"max_stack": 1
+	}
+]

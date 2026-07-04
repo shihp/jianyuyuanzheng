@@ -1,0 +1,129 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2b3d4e5f6g7"]
+
+[ext_resource type="Script" path="res://scenes/home/home.gd" id="1_h0me"]
+[ext_resource type="PackedScene" path="res://scenes/ui/nav_bar.tscn" id="2_nav"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_h0me"]
+font_size = 20
+font_color = Color(0.9, 0.85, 0.7, 1)
+
+[node name="Home" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h0me")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.08, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="Control" parent="VBox"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="ResourceContainer" type="HBoxContainer" parent="VBox/TopBar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 30.0
+grow_horizontal = 2
+
+[node name="ResourceLabel" type="Label" parent="VBox/TopBar/ResourceContainer"]
+layout_mode = 2
+text = "灵石: 0  仙玉: 0  修为: 0"
+label_settings = SubResource("LabelSettings_h0me")
+
+[node name="DustLabel" type="Label" parent="VBox/TopBar/ResourceContainer"]
+layout_mode = 2
+text = "灵尘: 0  碎片: 0种"
+label_settings = SubResource("LabelSettings_h0me")
+
+[node name="StageContainer" type="HBoxContainer" parent="VBox/TopBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StageLabel" type="Label" parent="VBox/TopBar/StageContainer"]
+layout_mode = 2
+text = "第 1 关"
+label_settings = SubResource("LabelSettings_h0me")
+
+[node name="ContentArea" type="Control" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HeroList" type="VBoxContainer" parent="VBox/ContentArea"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 400.0
+offset_left = 20.0
+offset_right = -20.0
+grow_horizontal = 2
+
+[node name="IdlePanel" type="Panel" parent="VBox/ContentArea"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -120.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="IdleLabel" type="Label" parent="VBox/ContentArea/IdlePanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+text = "闭关中..."
+label_settings = SubResource("LabelSettings_h0me")
+
+[node name="CollectButton" type="Button" parent="VBox/ContentArea/IdlePanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "收取闭关收益"
+
+[node name="NavBar" parent="." instance=ExtResource("2_nav")]
+layout_mode = 1
+offset_top = -60.0

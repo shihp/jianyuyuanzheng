@@ -1,0 +1,235 @@
+classDiagram
+    direction TB
+
+    class SaveManager {
+        <<autoload singleton>>
+        +signal save_completed()
+        +signal save_failed(error: String)
+        +signal load_completed(save_data: Dictionary)
+        +const SAVE_PATH: String
+        +const SAVE_VERSION: int
+        +const AUTO_SAVE_INTERVAL: float = 30.0
+        -_save_data: Dictionary
+        -_auto_save_timer: Timer
+        -_is_dirty: bool
+        +save_game() void
+        +load_game() bool
+        +save_now() void
+        +get_data(section: String) Dictionary
+        +set_data(section: String, data: Dictionary) void
+        +mark_dirty() void
+        +has_save() bool
+        +delete_save() void
+        -_get_default_save_data() Dictionary
+        -_migrate_save(data: Dictionary) Dictionary
+        -_on_auto_save() void
+    }
+
+    class EconomyManager {
+        <<autoload singleton>>
+        +signal resource_changed(resource_type: StringName, new_value: int, delta: int)
+        +signal resource_insufficient(resource_type: StringName, needed: int, current: int)
+        -_resources: Dictionary
+        -_fragments: Dictionary
+        +get_amount(resource_type: StringName) int
+        +can_afford(resource_type: StringName, amount: int) bool
+        +add(resource_type: StringName, amount: int) void
+        +spend(resource_type: StringName, amount: int) bool
+        +add_spirit_stones(amount: int) void
+        +add_jade(amount: int) void
+        +add_exp(amount: int) void
+        +add_dust(amount: int) void
+        +spend_spirit_stones(amount: int) bool
+        +spend_jade(amount: int) bool
+        +spend_dust(amount: int) bool
+        +get_fragments(hero_id: String) int
+        +add_fragments(hero_id: String, count: int) void
+        +spend_fragments(hero_id: String, count: int) bool
+        +get_total_fragment_types() int
+        -_persist() void
+    }
+
+    class HeroManager {
+        <<autoload singleton>>
+        +signal hero_acquired(hero_id: String)
+        +signal hero_leveled_up(hero_id: String, new_level: int)
+        +signal hero_quality_up(hero_id: String, new_quality: int)
+        +signal formation_changed(formation: Array)
+        +const MAX_FORMATION_SIZE: int = 5
+        +const QUALITY_NAMES: Array~String~
+        +const QUALITY_MULTIPLIERS: Array~float~
+        -_hero_db: Dictionary
+        -_owned_heroes: Array~String~
+        -_hero_levels: Dictionary
+        -_hero_qualities: Dictionary
+        -_formation: Array~String~
+        +add_hero(hero_id: String) bool
+        +is_owned(hero_id: String) bool
+        +get_owned_heroes() Array~String~
+        +get_hero_data(hero_id: String) Dictionary
+        +get_hero_level(hero_id: String) int
+        +get_hero_quality(hero_id: String) int
+        +get_hero_quality_name(hero_id: String) String
+        +get_hero_faction(hero_id: String) String
+        +get_hero_rarity(hero_id: String) int
+        +get_hero_stats(hero_id: String) Dictionary
+        +level_up(hero_id: String) bool
+        +quality_up(hero_id: String) bool
+        +can_level_up(hero_id: String) bool
+        +can_quality_up(hero_id: String) bool
+        +get_level_up_cost(hero_id: String) Dictionary
+        +get_quality_up_cost(hero_id: String) Dictionary
+        +get_max_level() int
+        +get_formation() Array~String~
+        +set_formation(hero_ids: Array~String~) bool
+        +add_to_formation(hero_id: String) bool
+        +remove_from_formation(hero_id: String) void
+        -_get_level_up_cost_internal(level: int) int
+        -_persist() void
+    }
+
+    class BattleManager {
+        <<autoload singleton>>
+        +signal battle_started(formation: Array)
+        +signal battle_ended(victory: bool, rewards: Dictionary)
+        +signal hero_attacked(attacker_id: String, target_id: String, damage: int, is_crit: bool)
+        +signal skill_triggered(hero_id: String, skill_name: String)
+        +signal skill_ready(hero_id: String)
+        +signal round_started(round: int)
+        +signal stage_progress(current_round: int, total_rounds: int)
+        +enum BattleState IDLE, IN_PROGRESS, VICTORY, DEFEAT
+        +const MAX_BATTLE_ROUNDS: int = 15
+        +const FACTION_ADVANTAGE_MULT: float = 1.25
+        +const FACTION_DISADVANTAGE_MULT: float = 0.75
+        +const ENERGY_PER_ATTACK: int = 25
+        +const ENERGY_THRESHOLD: int = 100
+        +battle_state: BattleState
+        -_player_formation: Array~Dictionary~
+        -_enemy_formation: Array~Dictionary~
+        -_current_round: int
+        -_speed_multiplier: float
+        -_is_battle_running: bool
+        +start_battle(player_hero_ids: Array~String~, stage_id: int) void
+        +get_battle_state() BattleState
+        +get_player_formation() Array~Dictionary~
+        +get_enemy_formation() Array~Dictionary~
+        +set_speed_multiplier(mult: float) void
+        +can_use_skill(hero_id: String) bool
+        +use_skill(hero_id: String) void
+        -_run_battle() void
+        -_attack(attacker: Dictionary) void
+        -_calculate_damage(attacker: Dictionary, defender: Dictionary) int
+        -_use_skill_internal(unit: Dictionary) void
+        -_is_counter(atk_faction: String, def_faction: String) bool
+        -_is_team_wiped(team: Array~Dictionary~) bool
+        -_end_battle(victory: bool) void
+        -_build_formation(hero_ids: Array~String~, is_player: bool) Array~Dictionary~
+        -_build_enemy_formation(stage_id: int) Array~Dictionary~
+        -_calculate_rewards() Dictionary
+        -_apply_rewards(rewards: Dictionary) void
+    }
+
+    class StageManager {
+        <<autoload singleton>>
+        +signal stage_cleared(stage_id: int, stars: int)
+        +signal stage_unlocked(stage_id: int)
+        +signal stuck_detected(stage_id: int, suggested_actions: Array)
+        -_stage_db: Dictionary
+        -_current_stage: int
+        -_max_stage: int
+        -_stage_stars: Dictionary
+        -_consecutive_losses: int
+        +get_current_stage() int
+        +get_max_stage() int
+        +get_stage_data(stage_id: int) Dictionary
+        +get_stage_rewards(stage_id: int) Dictionary
+        +is_stage_unlocked(stage_id: int) bool
+        +get_stage_stars(stage_id: int) int
+        +get_stage_enemy_stats(stage_id: int) Dictionary
+        +clear_stage(stage_id: int, stars: int) void
+        +fail_stage(stage_id: int) void
+        -_persist() void
+    }
+
+    class IdleSystem {
+        <<class_name IdleSystem>>
+        +signal offline_rewards_calculated(rewards: Dictionary)
+        +signal offline_rewards_collected(rewards: Dictionary)
+        +signal online_rewards_collected(rewards: Dictionary)
+        +const MAX_OFFLINE_HOURS: float = 12.0
+        -_accumulated_stones: float
+        -_accumulated_exp: float
+        +static _persisted_stones: float
+        +static _persisted_exp: float
+        +calculate_offline_rewards(last_timestamp: int) Dictionary
+        +collect_offline_rewards(rewards: Dictionary) void
+        +get_online_rate() Dictionary
+        +get_pending_rewards() Dictionary
+        +collect_online_rewards() Dictionary
+    }
+
+    class OfflineRewardPopup {
+        <<class_name OfflineRewardPopup>>
+        +signal rewards_collected(rewards: Dictionary)
+        -_rewards: Dictionary
+        -_time_label: Label
+        -_reward_label: Label
+        -_collect_button: Button
+        +setup(rewards: Dictionary) void
+        -_on_collect_pressed() void
+    }
+
+    class HeroDetail {
+        -_hero_id: String
+        -_name_label: Label
+        -_stats_label: Label
+        -_level_button: Button
+        -_quality_button: Button
+        -_formation_button: Button
+        -_fragment_label: Label
+        +set_hero_id(hero_id: String) void
+        -_refresh_ui() void
+        -_on_level_up_pressed() void
+        -_on_quality_up_pressed() void
+        -_on_formation_toggled() void
+        -_on_hero_leveled_up(hero_id: String, new_level: int) void
+        -_on_hero_quality_up(hero_id: String, new_quality: int) void
+    }
+
+    class BattleScene {
+        -_enemy_container: VBoxContainer
+        -_player_container: VBoxContainer
+        -_battle_log: Label
+        -_result_panel: Panel
+        -_skill_button: Button
+        -_speed_1x: Button
+        -_speed_15x: Button
+        -_speed_2x: Button
+        -_current_hero_id: String
+        -_start_battle() void
+        -_on_battle_started(formation: Array) void
+        -_on_hero_attacked(attacker_id: String, target_id: String, damage: int, is_crit: bool) void
+        -_on_battle_ended(victory: bool, rewards: Dictionary) void
+        -_on_skill_ready(hero_id: String) void
+        -_on_skill_pressed() void
+        -_on_speed_changed(mult: float) void
+        -_on_round_started(round: int) void
+        -_refresh_units() void
+        -_create_unit_card(unit: Dictionary, is_player: bool) Control
+    }
+
+    SaveManager --> EconomyManager : 读写 resources 段
+    SaveManager --> HeroManager : 读写 heroes 段
+    SaveManager --> StageManager : 读写 stage 段
+    SaveManager --> GachaManager : 读写 gacha 段
+    EconomyManager --> HeroManager : level_up/quality_up 消费
+    HeroManager --> EconomyManager : spend/add fragments
+    BattleManager --> HeroManager : get_hero_stats/get_formation
+    BattleManager --> StageManager : get_stage_data/get_stage_enemy_stats
+    BattleManager --> EconomyManager : add rewards
+    IdleSystem --> EconomyManager : add_spirit_stones/add_exp
+    OfflineRewardPopup --> IdleSystem : collect_offline_rewards
+    HeroDetail --> HeroManager : level_up/quality_up/can_xxx
+    HeroDetail --> EconomyManager : get_fragments/get_amount
+    BattleScene --> BattleManager : start_battle/skill/speed
+    BattleScene --> StageManager : get_current_stage

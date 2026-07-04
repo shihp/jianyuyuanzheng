@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://e4d5f6g7h8i9"]
+
+[ext_resource type="Script" path="res://scenes/ui/top_bar.gd" id="1_tbar"]
+
+[node name="TopBar" type="Control"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_tbar")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = -10.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpiritStoneLabel" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "灵石: 0"
+theme_override_font_sizes/font_size = 16
+
+[node name="JadeLabel" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "仙玉: 0"
+theme_override_font_sizes/font_size = 16
+
+[node name="ExpLabel" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "修为: 0"
+theme_override_font_sizes/font_size = 16
+
+[node name="StageLabel" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "第 1 关"
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 2

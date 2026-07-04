@@ -1,0 +1,38 @@
+[
+	{
+		"id": "zhengdao",
+		"name": "正道",
+		"description": "修天地正气，以剑道和符箓见长。注重平衡与正义。",
+		"color": "#4A90D9",
+		"icon": "res://assets/sprites/ui/faction_zhengdao.png",
+		"counters": "modao",
+		"counterred_by": "fomen"
+	},
+	{
+		"id": "modao",
+		"name": "魔道",
+		"description": "以血炼魂，追求极致力量。高攻高暴击，但生存较弱。",
+		"color": "#D94A4A",
+		"icon": "res://assets/sprites/ui/faction_modao.png",
+		"counters": "yaozu",
+		"counterred_by": "zhengdao"
+	},
+	{
+		"id": "yaozu",
+		"name": "妖族",
+		"description": "万妖化形，天赋异禀。高生命高防御，擅长持续作战。",
+		"color": "#4AD97A",
+		"icon": "res://assets/sprites/ui/faction_yaozu.png",
+		"counters": "fomen",
+		"counterred_by": "modao"
+	},
+	{
+		"id": "fomen",
+		"name": "佛门",
+		"description": "以佛法渡世，金刚不坏。最强防御与治疗，但输出较低。",
+		"color": "#D9B84A",
+		"icon": "res://assets/sprites/ui/faction_fomen.png",
+		"counters": "zhengdao",
+		"counterred_by": "yaozu"
+	}
+]

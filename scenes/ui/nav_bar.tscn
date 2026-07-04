@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://f5e6g7h8i9j0"]
+
+[ext_resource type="Script" path="res://scenes/ui/nav_bar.gd" id="1_nav"]
+
+[node name="NavBar" type="Control"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_nav")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.06, 0.12, 0.9)
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HomeButton" type="Button" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "洞府"
+metadata/_tooltip = "返回修炼洞府"
+
+[node name="BattleButton" type="Button" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "斗法"
+metadata/_tooltip = "前往关卡"
+
+[node name="GachaButton" type="Button" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "寻仙"
+metadata/_tooltip = "抽卡招募"
+
+[node name="HeroButton" type="Button" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "修士"
+metadata/_tooltip = "查看修士列表"
+
+[connection signal="pressed" from="HBox/HomeButton" to="." method="_on_home_pressed"]
+[connection signal="pressed" from="HBox/BattleButton" to="." method="_on_battle_pressed"]
+[connection signal="pressed" from="HBox/GachaButton" to="." method="_on_gacha_pressed"]
+[connection signal="pressed" from="HBox/HeroButton" to="." method="_on_hero_pressed"]

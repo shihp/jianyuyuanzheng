@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b1a2c3d4e5f6"]
+
+[ext_resource type="Script" uid="uid://iif8vahxig0a" path="res://scenes/main/main.gd" id="1_m4in"]
+
+[node name="Main" type="Control" unique_id=201156219]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m4in")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1972571043]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.078, 0.078, 0.117, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=480346783]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingLabel" type="Label" parent="CenterContainer" unique_id=5973722]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.9, 1)
+theme_override_font_sizes/font_size = 36
+text = "仙途远征
+载入中..."
+horizontal_alignment = 1
+vertical_alignment = 1

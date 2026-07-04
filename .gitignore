@@ -1,0 +1,37 @@
+# ==============================
+# Godot 4 .gitignore
+# ==============================
+
+# Godot 编辑器生成的临时目录
+.godot/
+.import/
+
+# 导出产物
+export/
+*.apk
+*.aab
+*.ipa
+*.exe
+*.pck
+*.zip
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 临时文件
+*.tmp
+*.bak
+*.log
+
+# 工作文档（按需取消注释）
+# deliverables/
+# docs/
